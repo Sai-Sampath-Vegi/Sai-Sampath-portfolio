@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Tic Tac Toe</title>
+   <style>
+      input {
+         width: 60px;
+         height: 50px;
+         font-size: 40px;
+         background-color: aliceblue;
+      }
+      dialog{
+         font-size:25px;
+      }
+      h1,
+      h3,
+      h4,
+      input {
+         text-align: center;
+      }
+   h5{
+      margin:10px;
+   }
+       #gamearea{
+          font-size:30px;
+       }
+      #again {
+         display: none;
+      }
+
+      #scores {
+         border: 1.5px solid black;
+         display: inline-block;
+         position: absolute;
+         right: 15%;
+         padding: 10px;
+      }
+       #playermove{
+          position:absolute;
+          left:10%;
+          display:inline-block;
+       }
+      #check {
+         height: 15px;
+      }
+
+      #gamearea {
+         display: none;
+      }
+
+      table {
+         background-color: black;
+      }
+
+      .rules {
+         margin: 5px;
+      }
+   #dialogbutton,#playagainbutton{
+      width:150px;
+      height:90px;
+      font-size:29px;
+   }
+   #gamemode1,#gamemode2{
+      width:15px;
+      margin:0px;
+   }
+   #gameModeBox{
+      margin:15px;
+   }
+   </style>
+</head>
+
+<body>
+    <dialog open>
+      <center>
+         <h3>Rules</h3>
+      </center>
+      <p class="rules">Each player gets their own score and characters to play</p>
+      <br>
+      <p class="rules">Player-1 gets character 'X' and Player-2 gets character 'O'</p>
+      <br>
+      <p class="rules">Each player can enter their character only in the selected box otherwise it shows error and player cant continue the game till he/she changes character to their one</p>
+      <br>
+      <p class="rules">If a player chooses a position he/she cannot change it</p>
+      <br>
+      <input type="checkbox" id="check" required>
+      <label for="check">I accept the rules to play this game</label><br>
+      <center>
+          <button id="dialogbutton" onclick="continueGame()" disabled style="margin:15px;height:30px;">Continue</button>
+      </center>
+   </dialog>
+   <div id="gamearea">
+      <h1>Play TicTacToe game</h1>
+      <p id="playermove">Player-1's turn</p>
+      <div id="scores">
+          <strong>Scores</strong><br><br>
+          Player-1:
+          <span id="p1">0</span><br>
+          Player-2:
+          <span id="p2">0</span>
+      </div>
+      <table align="center">
+         <tr>
+            <td><input type="text" id="board0" maxlength="1"></td>
+            <td><input type="text" id="board1" maxlength="1"></td>
+            <td><input type="text" id="board2" maxlength="1"></td>
+         </tr>
+         <tr>
+            <td><input type="text" id="board3" maxlength="1"></td>
+            <td><input type="text" id="board4" maxlength="1"></td>
+            <td><input type="text" id="board5" maxlength="1"></td>
+         </tr>
+         <tr>
+            <td><input type="text" id="board6" maxlength="1"></td>
+            <td><input type="text" id="board7" maxlength="1"></td>
+            <td><input type="text" id="board8" maxlength="1"></td>
+         </tr>
+      </table>
+      <div id="again">
+         <h3 id="playerwon"></h3>
+         <h4>Do you want to play again?<br>Click the following button to play again.</h4><br>
+         <center><button onclick="playAgain()" id="playagainbutton">Play again</button></center>
+      </div>
+   </div>
+<script>
+moves = 0;
+function validate(move) {
+    x = document.getElementById(move);
+    if ((moves % 2 == 0) && x.value != "x" && x.value != "X") {
+        x.style.backgroundColor = "red";
+        disableRemaining(move);
+        x.select();
+    }
+    else if ((moves % 2 == 1) && x.value != "o" && x.value != "O") {
+        x.style.backgroundColor = "red";
+        disableRemaining(move);
+        x.select();
+    }
+    else {
+        if (x.value == 'x' || x.value == 'X')
+            x.value = 'X';
+        else
+            x.value = 'O';
+        x.style.backgroundColor = "rgb(160,160,160)";
+        x.setAttribute('disabled', true);
+        enableRemaining();
+        check();
+        moves++;
+    }
+}
+function disableAll() {
+    for (i = 0; i < 9; i++)
+        document.getElementById('board' + i).setAttribute('disabled', true);
+}
+function check() {
+    board = new Array(9);
+    p1won = false;
+    p2won = false;
+    for (i = 0; i < 9; i++) {
+        board[i] = document.getElementById('board' + i).value;
+    }
+    player = (moves % 2 == 0) ? 1 : 2;
+    if ((board[0] == board[1]) && (board[1] == board[2]) && (board[0] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[3] == board[4]) && (board[4] == board[5]) && (board[3] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[6] == board[7]) && (board[7] == board[8]) && (board[6] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[0] == board[3]) && (board[3] == board[6]) && (board[0] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[1] == board[4]) && (board[4] == board[7]) && (board[1] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[2] == board[5]) && (board[5] == board[8]) && (board[2] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[0] == board[4]) && (board[4] == board[8]) && (board[0] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    else if ((board[2] == board[4]) && (board[4] == board[6]) && (board[2] != '')) {
+        p1won = (player == 1) ? true : false;
+        p2won = (player == 2) ? true : false;
+    }
+    if (p1won == false && p2won == false && moves == 8) {
+        document.getElementById('playerwon').innerText = 'Match is tie';
+        document.getElementById('again').style.display = "block";
+    }
+    if (p1won != false || p2won != false) {
+        if (p1won == true) {
+            document.getElementById('p1').innerText = parseInt(document.getElementById('p1').innerText) + 1;
+            document.getElementById('playerwon').innerHTML = 'Player-1 won the game<br>';
+        } else if (p2won == true) {
+            document.getElementById('p2').innerText = parseInt(document.getElementById('p2').innerText) + 1;
+            document.getElementById('playerwon').innerHTML = 'Player-2 won the game<br>';
+        }
+        disableAll();
+        document.getElementById('again').style.display = "block";
+        removeEventList();
+    }
+    else if(p1won==false&&p2won==false) {
+        if (moves % 2 == 1) {
+            document.getElementById('playermove').innerHTML = "Player-1's turn";
+        } else {
+            document.getElementById('playermove').innerHTML = "Player-2's turn";
+        }
+    }
+}
+function disableRemaining(move) {
+    for (i = 0; i < 9; i++) {
+        if (move == ('board' + i))
+            continue;
+        document.getElementById('board' + i).setAttribute('disabled', true);
+    }
+}
+function enableRemaining() {
+    for (i = 0; i < 9; i++) {
+        move = document.getElementById('board' + i).value;
+        if (move != '')
+            continue;
+        document.getElementById('board' + i).removeAttribute('disabled');
+    }
+}
+function playAgain() {
+    moves = 0;
+    document.getElementById('playerwon').innerText = '';
+    document.getElementById('again').style.display = "none";
+    document.getElementById('playermove').innerHTML = "Player-1's turn";
+    resetBoard();
+}
+function resetBoard() {
+    for (i = 0; i < 9; i++) {
+        document.getElementById('board' + i).value = '';
+        document.getElementById('board' + i).style.backgroundColor = "aliceblue";
+        document.getElementById('board' + i).removeAttribute('disabled');
+    }
+}
+function continueGame() {
+    document.querySelector('dialog').close();
+    document.getElementById('gamearea').style.display = "block";
+}
+function removeEventList() {
+    for(i=0; i<9; i++) {
+        document.getElementById('board'+i).removeEventListener('click');
+    }
+}
+document.getElementById('check').addEventListener('input', function () {
+    document.getElementById('check').setAttribute('disabled',true);
+    document.getElementById('dialogbutton').removeAttribute('disabled');
+});
+document.getElementById('board0').addEventListener('click', function () {
+    document.getElementById('board0').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board0');
+});
+document.getElementById('board1').addEventListener('click', function () {
+    document.getElementById('board1').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board1');
+});
+document.getElementById('board2').addEventListener('click', function () {
+    document.getElementById('board2').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board2');
+});
+document.getElementById('board3').addEventListener('click', function () {
+    document.getElementById('board3').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board3');
+});
+document.getElementById('board4').addEventListener('click', function () {
+    document.getElementById('board4').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board4');
+});
+document.getElementById('board5').addEventListener('click', function () {
+    document.getElementById('board5').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board5');
+});
+document.getElementById('board6').addEventListener('click', function () {
+    document.getElementById('board6').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board6');
+});
+document.getElementById('board7').addEventListener('click', function () {
+    document.getElementById('board7').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board7');
+});
+document.getElementById('board8').addEventListener('click', function () {
+    document.getElementById('board8').style.backgroundColor="rgba(170,159,60,0.9)";
+    disableRemaining('board8');
+});
+document.getElementById('board0').addEventListener('input', function () {
+    validate('board0');
+    enableRemaining();
+});
+document.getElementById('board1').addEventListener('input', function () {
+    validate('board1');
+    enableRemaining();
+});
+document.getElementById('board2').addEventListener('input', function () {
+    validate('board2');
+    enableRemaining();
+});
+document.getElementById('board3').addEventListener('input', function () {
+    validate('board3');
+    enableRemaining();
+});
+document.getElementById('board4').addEventListener('input', function () {
+    validate('board4');
+    enableRemaining();
+});
+document.getElementById('board5').addEventListener('input', function () {
+    validate('board5');
+    enableRemaining();
+});
+document.getElementById('board6').addEventListener('input', function () {
+    validate('board6');
+    enableRemaining();
+});
+document.getElementById('board7').addEventListener('input', function () {
+    validate('board7');
+    enableRemaining();
+});
+document.getElementById('board8').addEventListener('input', function () {
+    validate('board8');
+    enableRemaining();
+});
+</script>
+</body>
+
+</html>
