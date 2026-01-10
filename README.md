@@ -15,7 +15,7 @@ Technologies Used: Java, Java AWT/GUI.
 How to Run the Code
 To run these projects, you will need to have a Java Development Kit (JDK) installed on your system.
 Clone the repository:
-git clone https://github.com/Sai-Sampath-Vegi/
+git clone https://github.com/Sai-Sampath-Vegi/Sai-Sampath-portfolio.git
 Compile and run:
 Navigate to the specific project folder in your terminal and use the following commands:
 For Java projects:
@@ -28,4 +28,5 @@ Contact
 If you have any questions or feedback about my projects, feel free to contact me:
 Email: saisampathvegi@gmail.com
 LinkedIn: https://www.linkedin.com/in/sai-sampath-vegi-01336937b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
+
 
