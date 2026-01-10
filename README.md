@@ -36,7 +36,7 @@ You must install the following tools to compile and run these projects:
 ### Running the Code
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/Sai-Sampath-Vegi/Sai-Sampath-old-portfolio.git](https://github.com/Sai-Sampath-Vegi/Sai-Sampath-old-portfolio.git)
+   git clone https://github.com/Sai-Sampath-Vegi/Sai-Sampath-old-portfolio.git
    ```
 2. **Run the Commands:**
     For Java Projects:
@@ -56,3 +56,4 @@ I am always open to discussing technical improvements, collaboration opportuniti
 
 * **Email:** [saisampathvegi@gmail.com](mailto:saisampathvegi@gmail.com)
 * **LinkedIn:** [Sai Sampath Vegi](https://www.linkedin.com/in/sai-sampath-vegi-01336937b)
+
