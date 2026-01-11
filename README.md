@@ -40,16 +40,16 @@ You must install the following tools to compile and run these projects:
    ```
 2. **Run the Commands:**
  * **For Java Projects:**
-       ```bash
-           javac "Original File Name.java"
-           java "OriginalFileName"
-       ```
+    ```bash
+    javac "Original File Name.java"
+    java "OriginalFileName"
+    ```
 
  * **For C Projects:**
-        ```bash
-           gcc "Original File Name.c" -o output
-           ./output
-       ```
+   ```bash
+   gcc "Original File Name.c" -o output
+   ./output
+   ```
 
 ---
 
@@ -61,6 +61,7 @@ I am always open to discussing technical improvements, collaboration opportuniti
 
 * **Email:** [saisampathvegi@gmail.com](mailto:saisampathvegi@gmail.com)
 * **LinkedIn:** [Sai Sampath Vegi](https://www.linkedin.com/in/sai-sampath-vegi-01336937b)
+
 
 
 
