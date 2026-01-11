@@ -3,11 +3,11 @@ import java.util.Locale;
 
 public class SOSConsole {
     public static void main(String args[]) {
-        new PlaySosGame().play();
+        new SosGame().play();
     }
 }
 
-class PlaySosGame {
+class SosGame {
     int scoreOfPlayerOne = 0, scoreOfPlayerTwo = 0;
     char arrBoard[][] = new char[16][16];
     String arrPositions[][] = {
@@ -319,3 +319,4 @@ class PlaySosGame {
         }
     }
 }
+
