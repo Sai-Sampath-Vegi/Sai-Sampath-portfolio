@@ -3,12 +3,12 @@
 #include <stdbool.h>
 
 void getPlayerMove();
-bool checkWin(char);
+bool checkMatch(char);
 bool rowCheck(char);
 bool columnCheck(char);
 bool diagnolCheck(char);
 void displayBoard();
-void printpositions();
+void printPositions();
 void makeComputerMove();
 int findWinningComputerMove(int, int);
 
@@ -22,7 +22,7 @@ int main()
 	printf("Player should enter the position of his/her move between 1 and 9\n");
 	printf("Player gets the option (X) and Computer gets the option (O)\n");
 	printf("The following are the positions\n");
-	printpositions();
+	printPositions();
 
 	char confirmation;
 	int counter, playerMovesCounter;
@@ -37,20 +37,23 @@ int main()
 		counter = 0;
 		while (counter <= 4)
 		{
-			printpositions();
+			printPositions();
 			printf("Your turn\n");
 			getPlayerMove();
 
-			bool isPlayerWon = checkWin(playerCharacter);
+			bool isPlayerWon = checkMatch(playerCharacter);
+
 			if (isPlayerWon)
 			{
 				displayBoard();
-				printf("...YOU WON...\n");
+				printf("\n...YOU WON...\n");
+				break;
 			}
 			else if (isPlayerWon == 0 && counter == 4)
 			{
 				displayBoard();
-				printf("...MATCH IS TIE...\n");
+				printf("\n...MATCH IS TIE...\n");
+				break;
 			}
 
 			if (counter < 4)
@@ -58,41 +61,97 @@ int main()
 				makeComputerMove();
 				displayBoard();
 
-				bool isComputerWon = checkWin(computerCharacter);
+				bool isComputerWon = checkMatch(computerCharacter);
+
 				if (isComputerWon)
 				{
 					displayBoard();
-					printf("...COMPUTER WON TRY AGAIN...\n");
+					printf("\n...COMPUTER WON TRY AGAIN...\n");
+					break;
 				}
 				else if (isComputerWon == 0 && counter++ == 4)
 				{
 					displayBoard();
-					printf("...MATCH IS TIE...\n");
+					printf("\n...MATCH IS TIE...\n");
+					break;
 				}
 			}
 		}
 
-		printf("Do you want to play again press y for yes any key for no:");
+		printf("\nDo you want to play again press y for yes any key for no:");
 		scanf(" %c", &confirmation);
 	} while (confirmation == 'y' || confirmation == 'Y');
 }
 
-void printpositions()
+void printPositions()
 {
-	printf("...Position...\n");
+	printf("\n...Position...\n");
+
 	for (int counter = 1; counter < 10; counter++)
 	{
-		printf("%d ", counter);
+		printf(" %d ", counter);
 		if (counter % 3 == 0)
 		{
 			printf("\n");
 		}
+	}
+
+	printf("\n");
+}
+
+void displayBoard()
+{
+	printf("\n");
+
+	for (int counter = 0; counter < 9; counter++)
+	{
+		if (arrBoard[counter] == '\0')
+		{
+			printf(" - ");
+		}
+		else
+		{
+			printf(" %c ", arrBoard[counter]);
+		}
+
+		if ((counter + 1) % 3 == 0)
+		{
+			printf("\n");
+		}
+	}
+
+	printf("\n");
+}
+
+void getPlayerMove()
+{
+	char playerMove;
+	printf("Enter position for (%c): ", playerCharacter);
+	scanf(" %c", &playerMove);
+
+	if (playerMove >= '1' && playerMove <= '9')
+	{
+		if (arrBoard[playerMove - '1'] == '\0')
+		{
+			arrBoard[playerMove - '1'] = playerCharacter;
+		}
+		else
+		{
+			printf("Position occupied.\n");
+			getPlayerMove();
+		}
+	}
+	else
+	{
+		printf("Invalid position.\n");
+		getPlayerMove();
 	}
 }
 
 int findWinningComputerMove(int playerOneCharacter, int playerTwoCharacter)
 {
 	int winChances[][3] = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}}, counter;
+
 	for (counter = 0; counter < 8; counter++)
 	{
 		if (((winChances[counter][0] == playerOneCharacter) && (winChances[counter][1] == playerTwoCharacter) && (arrBoard[winChances[counter][2]] == '\0')) || ((winChances[counter][0] == playerTwoCharacter) && (winChances[counter][1] == playerOneCharacter) && (arrBoard[winChances[counter][2]] == '\0')))
@@ -110,6 +169,7 @@ int findWinningComputerMove(int playerOneCharacter, int playerTwoCharacter)
 			return winChances[counter][1];
 		}
 	}
+
 	return -1;
 }
 
@@ -134,6 +194,7 @@ void makeComputerMove()
 		for (remainingPositionsCounter = counter + 1; remainingPositionsCounter < computerMovesCounter; remainingPositionsCounter++)
 		{
 			computerMove = findWinningComputerMove(computerMoves[counter], computerMoves[remainingPositionsCounter]);
+
 			if (computerMove != -1)
 			{
 				break;
@@ -145,6 +206,7 @@ void makeComputerMove()
 			break;
 		}
 	}
+
 	if (computerMove == -1)
 	{
 		for (counter = 0; counter < playerMovesCounter; counter++)
@@ -152,6 +214,7 @@ void makeComputerMove()
 			for (remainingPositionsCounter = counter + 1; remainingPositionsCounter < playerMovesCounter; remainingPositionsCounter++)
 			{
 				computerMove = findWinningComputerMove(playerMoves[counter], playerMoves[remainingPositionsCounter]);
+
 				if (computerMove != -1)
 				{
 					break;
@@ -185,34 +248,10 @@ void makeComputerMove()
 	}
 }
 
-void getPlayerMove()
-{
-	char playerMove;
-	printf("Enter position for (%c): ", playerCharacter);
-	scanf(" %c", &playerMove);
-
-	if (playerMove >= '1' && playerMove <= '9')
-	{
-		if (arrBoard[playerMove - '1'] == '\0')
-		{
-			arrBoard[playerMove - '1'] = playerCharacter;
-		}
-		else
-		{
-			printf("Position occupied.\n");
-			getPlayerMove();
-		}
-	}
-	else
-	{
-		printf("Invalid position.\n");
-		getPlayerMove();
-	}
-}
-
 bool rowCheck(char currentPlayerCharacter)
 {
 	bool isCurrentPlayerWon = false;
+
 	if (((arrBoard[0] == currentPlayerCharacter) && (arrBoard[1] == currentPlayerCharacter) && (arrBoard[2] == currentPlayerCharacter)) || ((arrBoard[3] == currentPlayerCharacter) && (arrBoard[4] == currentPlayerCharacter) && (arrBoard[5] == currentPlayerCharacter)) || ((arrBoard[6] == currentPlayerCharacter) && (arrBoard[7] == currentPlayerCharacter) && (arrBoard[8] == currentPlayerCharacter)))
 	{
 		isCurrentPlayerWon = true;
@@ -224,6 +263,7 @@ bool rowCheck(char currentPlayerCharacter)
 bool columnCheck(char currentPlayerCharacter)
 {
 	bool isCurrentPlayerWon = false;
+
 	if (((arrBoard[0] == currentPlayerCharacter) && (arrBoard[3] == currentPlayerCharacter) && (arrBoard[6] == currentPlayerCharacter)) || ((arrBoard[1] == currentPlayerCharacter) && (arrBoard[4] == currentPlayerCharacter) && (arrBoard[7] == currentPlayerCharacter)) || ((arrBoard[2] == currentPlayerCharacter) && (arrBoard[5] == currentPlayerCharacter) && (arrBoard[8] == currentPlayerCharacter)))
 	{
 		isCurrentPlayerWon = true;
@@ -235,6 +275,7 @@ bool columnCheck(char currentPlayerCharacter)
 bool diagnolCheck(char currentPlayerCharacter)
 {
 	bool isCurrentPlayerWon = false;
+
 	if (((arrBoard[0] == currentPlayerCharacter) && (arrBoard[4] == currentPlayerCharacter) && (arrBoard[8] == currentPlayerCharacter)) || ((arrBoard[2] == currentPlayerCharacter) && (arrBoard[4] == currentPlayerCharacter) && (arrBoard[6] == currentPlayerCharacter)))
 	{
 		isCurrentPlayerWon = true;
@@ -243,35 +284,14 @@ bool diagnolCheck(char currentPlayerCharacter)
 	return isCurrentPlayerWon;
 }
 
-bool checkWin(char currentPlayerCharacter)
+bool checkMatch(char currentPlayerCharacter)
 {
 	bool isCurrentPlayerWon = false;
+
 	if (rowCheck(currentPlayerCharacter) || columnCheck(currentPlayerCharacter) || diagnolCheck(currentPlayerCharacter))
 	{
 		isCurrentPlayerWon = true;
 	}
 
 	return isCurrentPlayerWon;
-}
-
-void displayBoard()
-{
-	printf("\n");
-	for (int counter = 0; counter < 9; counter++)
-	{
-		if (arrBoard[counter] == '\0')
-		{
-			printf(" - ");
-		}
-		else
-		{
-			printf(" %c ", arrBoard[counter]);
-		}
-
-		if ((counter + 1) % 3 == 0)
-		{
-			printf("\n");
-		}
-	}
-	printf("\n");
 }

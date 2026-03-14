@@ -33,10 +33,13 @@ public class TicTacToeGraphics extends Frame implements ActionListener {
 		for (int buttonsCounter = 0; buttonsCounter < 9; buttonsCounter++) {
 			buttons[buttonsCounter] = new Button();
 			buttons[buttonsCounter].setFont(new Font("Arial", Font.BOLD, 30));
+
 			int x = 100 + (buttonsCounter % 3) * 100;
 			int y = 150 + (buttonsCounter / 3) * 100;
+
 			buttons[buttonsCounter].setBounds(x, y, 90, 90);
 			add(buttons[buttonsCounter]);
+
 			buttons[buttonsCounter].addActionListener(this);
 		}
 
@@ -52,12 +55,16 @@ public class TicTacToeGraphics extends Frame implements ActionListener {
 
 		playGameAgainButton = new Button("Play Again");
 		playGameAgainButton.setBounds(150, 625, 75, 20);
+
 		endGameButton = new Button("End Game");
 		endGameButton.setBounds(225, 625, 75, 20);
+
 		playGameAgainButton.addActionListener(this);
 		endGameButton.addActionListener(this);
+
 		add(playGameAgainButton);
 		add(endGameButton);
+
 		playGameAgainButton.setVisible(false);
 		endGameButton.setVisible(false);
 
@@ -71,10 +78,12 @@ public class TicTacToeGraphics extends Frame implements ActionListener {
 			System.exit(0);
 		} else {
 			moves++;
+
 			for (int buttonsCounter = 0; buttonsCounter < 9; buttonsCounter++) {
 				if (ae.getSource() == buttons[buttonsCounter]) {
 					buttons[buttonsCounter].setLabel((moves % 2 == 1) ? "X" : "O");
 					buttons[buttonsCounter].setEnabled(false);
+
 					if (checkWin())
 						break;
 					else {
@@ -87,61 +96,78 @@ public class TicTacToeGraphics extends Frame implements ActionListener {
 
 	boolean checkWin() {
 		boolean isCurrentPlayerWon = false;
+
 		if (buttons[0].getLabel() == buttons[1].getLabel() && buttons[1].getLabel() == buttons[2].getLabel()
 				&& (!(buttons[0].getLabel().equals("")))) {
 			buttons[0].setBackground(Color.GREEN);
 			buttons[1].setBackground(Color.GREEN);
 			buttons[2].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[3].getLabel() == buttons[4].getLabel() && buttons[4].getLabel() == buttons[5].getLabel()
 				&& (!(buttons[3].getLabel().equals("")))) {
 			buttons[3].setBackground(Color.GREEN);
 			buttons[4].setBackground(Color.GREEN);
 			buttons[5].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[6].getLabel() == buttons[7].getLabel() && buttons[7].getLabel() == buttons[8].getLabel()
 				&& (!(buttons[6].getLabel().equals("")))) {
 			buttons[6].setBackground(Color.GREEN);
 			buttons[7].setBackground(Color.GREEN);
 			buttons[8].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[0].getLabel() == buttons[3].getLabel() && buttons[3].getLabel() == buttons[6].getLabel()
 				&& (!(buttons[0].getLabel().equals("")))) {
 			buttons[0].setBackground(Color.GREEN);
 			buttons[3].setBackground(Color.GREEN);
 			buttons[6].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[1].getLabel() == buttons[4].getLabel() && buttons[4].getLabel() == buttons[7].getLabel()
 				&& (!(buttons[1].getLabel().equals("")))) {
 			buttons[1].setBackground(Color.GREEN);
 			buttons[4].setBackground(Color.GREEN);
 			buttons[7].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[2].getLabel() == buttons[5].getLabel() && buttons[5].getLabel() == buttons[8].getLabel()
 				&& (!(buttons[2].getLabel().equals("")))) {
 			buttons[2].setBackground(Color.GREEN);
 			buttons[5].setBackground(Color.GREEN);
 			buttons[8].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[0].getLabel() == buttons[4].getLabel() && buttons[4].getLabel() == buttons[8].getLabel()
 				&& (!(buttons[0].getLabel().equals("")))) {
 			buttons[0].setBackground(Color.GREEN);
 			buttons[4].setBackground(Color.GREEN);
 			buttons[8].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		} else if (buttons[2].getLabel() == buttons[4].getLabel() && buttons[4].getLabel() == buttons[6].getLabel()
 				&& (!(buttons[2].getLabel().equals("")))) {
 			buttons[2].setBackground(Color.GREEN);
 			buttons[4].setBackground(Color.GREEN);
 			buttons[6].setBackground(Color.GREEN);
+
 			showState(1);
+
 			isCurrentPlayerWon = true;
 		}
 
@@ -172,9 +198,12 @@ public class TicTacToeGraphics extends Frame implements ActionListener {
 			buttons[buttonsCounter].setLabel("");
 			buttons[buttonsCounter].setEnabled(true);
 			buttons[buttonsCounter].setBackground(Color.WHITE);
+
 			playGameAgainButton.setVisible(false);
 			endGameButton.setVisible(false);
+
 			moves = 0;
+
 			status.setText("PLAYER 1 MOVE");
 		}
 	}

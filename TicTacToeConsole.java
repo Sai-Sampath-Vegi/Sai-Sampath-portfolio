@@ -8,10 +8,10 @@ class TicTacToeConsole {
 
 class TicTacToeGame {
 	char board[][] = new char[3][3], playerOneCharacter, playerTwoCharacter;
-	Scanner scan = new Scanner(System.in);
+	Scanner scanner = new Scanner(System.in);
 
 	void printPositions() {
-		System.out.print("...Position...\n");
+		System.out.print("\n...Position...\n");
 		for (int counter = 1; counter < 10; counter++) {
 			System.out.print(counter + " ");
 			if (counter % 3 == 0) {
@@ -90,7 +90,7 @@ class TicTacToeGame {
 		char move;
 		System.out.print("Enter position for player " + ((playerCharacter == playerOneCharacter) ? 1
 				: 2) + "(" + playerCharacter + "): ");
-		move = scan.next().charAt(0);
+		move = scanner.next().charAt(0);
 
 		if (move >= '1' && move <= '9') {
 			switch (move) {
@@ -141,48 +141,54 @@ class TicTacToeGame {
 	void play() {
 		char playerChoice;
 		int rowCounter, columnCounter;
+		boolean isPlayerChoicesChoosen = false;
 
 		boolean isPlayerWon = false;
 		do {
-			System.out.print("...TIC TAC TOE...\n");
+			System.out.print("\n...TIC TAC TOE...\n");
 			for (rowCounter = 0; rowCounter < 3; rowCounter++) {
 				for (columnCounter = 0; columnCounter < 3; columnCounter++) {
 					board[rowCounter][columnCounter] = '\0';
 				}
 			}
 
-			System.out.print("...RULES...\n");
+			System.out.print("\n...RULES...\n");
 			System.out.print("1:The player cannot place their option in already existed positions.\n");
 			System.out.print("2:Each player gets their own option to play.\n");
 			System.out.print("3:Each player should enter the position of the next move between 1 and 9\n");
 			System.out.print("4:The following are the positions.\n");
 			printPositions();
 
-			enterCharacterAgain: while (true) {
-				System.out.print("Enter the option of player 1:");
-				playerOneCharacter = scan.next().charAt(0);
-				System.out.print("Enter the option of player 2:");
-				playerTwoCharacter = scan.next().charAt(0);
-				if (playerOneCharacter == playerTwoCharacter) {
-					System.out.print("Both players choosed same options\n");
-					continue enterCharacterAgain;
+			if (!isPlayerChoicesChoosen) {
+				enterCharacterAgain: while (true) {
+					System.out.print("\nEnter the option of player 1:");
+					playerOneCharacter = scanner.next().charAt(0);
+					System.out.print("\nEnter the option of player 2:");
+					playerTwoCharacter = scanner.next().charAt(0);
+					if (playerOneCharacter == playerTwoCharacter) {
+						System.out.print("Both players choosed same options\n");
+						continue enterCharacterAgain;
+					}
+					break;
 				}
-				break;
+				isPlayerChoicesChoosen = true;
 			}
 
 			rowCounter = 0;
 
 			endGame: while (rowCounter <= 4) {
 				printPositions();
-				System.out.print("Player 1's turn\n");
+				System.out.print("\nPlayer 1's turn\n");
 				getPlayerMove(playerOneCharacter);
 				isPlayerWon = checkWin(playerOneCharacter);
 
 				if (isPlayerWon) {
-					System.out.print("...PLAYER 1 WON...\n");
+					displayBoard();
+					System.out.print("\n...PLAYER 1 WON...\n");
 					break endGame;
 				} else if ((isPlayerWon == false) && (rowCounter == 4)) {
-					System.out.print("...MATCH IS TIE...\n");
+					displayBoard();
+					System.out.print("\n...MATCH IS TIE...\n");
 					break endGame;
 				}
 
@@ -190,15 +196,17 @@ class TicTacToeGame {
 
 				if (rowCounter < 4) {
 					printPositions();
-					System.out.print("Player 2's turn\n");
+					System.out.print("\nPlayer 2's turn\n");
 					getPlayerMove(playerTwoCharacter);
 					isPlayerWon = checkWin(playerTwoCharacter);
 
 					if (isPlayerWon) {
-						System.out.print("...PLAYER 2 WON...\n");
+						displayBoard();
+						System.out.print("\n...PLAYER 2 WON...\n");
 						break endGame;
 					} else if ((isPlayerWon == false) && (rowCounter++ == 4)) {
-						System.out.print("...MATCH IS TIE...\n");
+						displayBoard();
+						System.out.print("\n...MATCH IS TIE...\n");
 						break endGame;
 					}
 				}
@@ -206,10 +214,10 @@ class TicTacToeGame {
 				displayBoard();
 			}
 
-			System.out.print("Do you want to play again press y for yes any key for no:");
-			playerChoice = scan.next().charAt(0);
+			System.out.print("\nDo you want to play again press y for Yes any key for No:");
+			playerChoice = scanner.next().charAt(0);
 		} while (playerChoice == 'y' || playerChoice == 'Y');
 
-		scan.close();
+		scanner.close();
 	}
 }

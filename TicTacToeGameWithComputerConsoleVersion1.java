@@ -14,7 +14,7 @@ class TicTacToeGame {
 	void printPositions() {
 		System.out.print("...Position...\n");
 		for (int counter = 1; counter < 10; counter++) {
-			System.out.print(counter + " ");
+			System.out.print(" " + counter + " ");
 			if (counter % 3 == 0) {
 				System.out.print("\n");
 			}
@@ -274,17 +274,18 @@ class TicTacToeGame {
 
 			moveCounter = 0;
 			end: while (moveCounter <= 4) {
+				printPositions();
 				System.out.print("Your turn\n");
 				getPlayerMove();
 				isPlayerOneWon = checkWin(playerCharacter);
 
 				if (isPlayerOneWon) {
 					displayBoard();
-					System.out.print("...YOU WON...\n");
+					System.out.print("\n...YOU WON...\n");
 					break end;
 				} else if ((isPlayerOneWon == false) && (moveCounter == 4)) {
 					displayBoard();
-					System.out.print("...MATCH IS TIE...\n");
+					System.out.print("\n...MATCH IS TIE...\n");
 					break end;
 				}
 
@@ -295,17 +296,17 @@ class TicTacToeGame {
 
 					if (isPlayerOneWon) {
 						displayBoard();
-						System.out.print("...COMPUTER WON TRY AGAIN...\n");
+						System.out.print("\n...COMPUTER WON TRY AGAIN...\n");
 						break end;
 					} else if ((isPlayerOneWon == false) && (moveCounter++ == 4)) {
 						displayBoard();
-						System.out.print("...MATCH IS TIE...\n");
+						System.out.print("\n...MATCH IS TIE...\n");
 						break end;
 					}
 				}
 			}
 
-			System.out.print("Do you want to play again press y for yes any key for no: ");
+			System.out.print("\nDo you want to play again press y for yes any key for no: ");
 			userChoice = scan.next().charAt(0);
 		} while (userChoice == 'y' || userChoice == 'Y');
 
